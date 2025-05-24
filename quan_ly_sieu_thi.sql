@@ -1,4 +1,3 @@
-
 CREATE TABLE KhachHang (
     IdKhachHang INT PRIMARY KEY,
     HoTen VARCHAR(100),
@@ -10,7 +9,8 @@ CREATE TABLE HoaDon (
     Ngay DATE,
     TongTien DECIMAL(15,2),
     IdKhachHang INT,
-    FOREIGN KEY (IdKhachHang) REFERENCES KhachHang(IdKhachHang)
+    CONSTRAINT fk_hoadon_khachhang FOREIGN KEY (IdKhachHang) 
+    REFERENCES KhachHang(IdKhachHang) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE NhanVien (
@@ -39,8 +39,10 @@ CREATE TABLE ChiTietHoaDon (
     SoLuong INT,
     DonGia DECIMAL(15,2),
     PRIMARY KEY (MaDon, MaSanPham),
-    FOREIGN KEY (MaDon) REFERENCES HoaDon(MaDon),
-    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+    CONSTRAINT fk_chitiethoadon_hoadon FOREIGN KEY (MaDon) 
+    REFERENCES HoaDon(MaDon) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_chitiethoadon_sanpham FOREIGN KEY (MaSanPham) 
+    REFERENCES SanPham(MaSanPham) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE NhaCungCap (
@@ -55,7 +57,8 @@ CREATE TABLE DonNhapHang (
     Ngay DATE,
     TongTien DECIMAL(15,2),
     IdNhaCungCap INT,
-    FOREIGN KEY (IdNhaCungCap) REFERENCES NhaCungCap(IdNhaCungCap)
+    CONSTRAINT fk_donnhaphang_nhacungcap FOREIGN KEY (IdNhaCungCap) 
+    REFERENCES NhaCungCap(IdNhaCungCap) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ChiTietNhapHang (
@@ -64,6 +67,8 @@ CREATE TABLE ChiTietNhapHang (
     SoLuong INT,
     DonGia DECIMAL(15,2),
     PRIMARY KEY (MaDon, MaSanPham),
-    FOREIGN KEY (MaDon) REFERENCES DonNhapHang(MaDon),
-    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+    CONSTRAINT fk_chitietnhaphang_donnhaphang FOREIGN KEY (MaDon) 
+    REFERENCES DonNhapHang(MaDon) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_chitietnhaphang_sanpham FOREIGN KEY (MaSanPham) 
+    REFERENCES SanPham(MaSanPham) ON UPDATE CASCADE ON DELETE CASCADE
 );
