@@ -6,6 +6,8 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 load_dotenv()
+
+#them 1 dong vao code api 
 timeout = 10
 conn = pymysql.connect(
   charset="utf8mb4",
