@@ -1,1 +1,1 @@
-# sieu-thi-tu-dai-SV
+Bài tập lớn môn CSDL.
