@@ -9,45 +9,64 @@ body {
     display: flex;
 }
 
-.sidebar {
-    width: 220px;
-    background-color: #e1f5fe; /* Lighter blue sidebar */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
+.sidebar, .sidebar-circle {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
-    height: 100%; /* Full height sidebar */
+    align-items: flex-end; /* Đẩy nút sang phải */
+    width: 180px;
+    min-width: 180px;
+    background: transparent;
+    padding: 32px 0 0 0;
+    height: 100vh;
+    border-radius: 0;
+    gap: 18px;
+    margin-right: 0; /* Đảm bảo không bị lệch trái */
 }
 
-.sidebar button {
+.circle-btn {
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: 12px 20px; /* Slightly more padding */
-    margin-bottom: 8px; /* More margin between buttons */
+    gap: 10px;
+    width: 170px;
+    height: 48px;
     border: none;
-    background-color: transparent;
+    border-radius: 18px; /* Bo tròn 4 góc */
+    background: #e3f2fd;
     color: #333;
+    font-size: 1.15em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
     cursor: pointer;
-    text-align: left;
-    transition: background-color 0.3s ease;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+    padding: 0 22px;
+}
+
+.circle-btn i {
+    font-size: 1.3em;
+    color: #333;
+}
+
+.circle-btn span {
+    color: #333;
     font-size: 1em;
+    font-weight: 600;
+    margin: 0;
+    pointer-events: none;
 }
 
-.sidebar button:hover {
-    background-color: #bbdefb; /* Slightly darker blue hover */
+.circle-btn:hover,
+.circle-btn.active {
+    background: #1976d2;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+    transform: translateY(-2px) scale(1.04);
 }
 
-.sidebar button.active {
-    background-color: #bbdefb; /* Active button color */
-    font-weight: bold;
-}
-
-.sidebar button svg {
-    margin-right: 12px;
-    font-size: 1.2em; /* Adjust icon size */
-    color: #1976d2; /* Blue icon color */
+.circle-btn:hover i,
+.circle-btn.active i,
+.circle-btn:hover span,
+.circle-btn.active span {
+    color: #fff;
 }
 
 .content {

@@ -9,12 +9,32 @@
 </head>
 <body>
     <div class="sidebar">
-        <button onclick="openTab('khachhang')"><i class="fas fa-user"></i> Khách Hàng</button>
-        <button onclick="openTab('nhanvien')"><i class="fas fa-users"></i> Nhân viên</button>
-        <button onclick="openTab('sanpham')"><i class="fas fa-box"></i> Sản phẩm</button>
-        <button onclick="openTab('nhacungcap')"><i class="fas fa-truck"></i> Nhà cung cấp</button>
-        <button onclick="openTab('hoadon')"><i class="fas fa-file-invoice"></i> Hóa đơn</button>
-        <button onclick="openTab('nhaphang')"><i class="fas fa-cart-plus"></i> Nhập hàng</button>
+        <div class="sidebar-circle">
+            <button class="circle-btn" onclick="openTab('khachhang')">
+                <i class="fas fa-user"></i>
+                <span>Khách Hàng</span>
+            </button>
+            <button class="circle-btn" onclick="openTab('nhanvien')">
+                <i class="fas fa-users"></i>
+                <span>Nhân viên</span>
+            </button>
+            <button class="circle-btn" onclick="openTab('sanpham')">
+                <i class="fas fa-box"></i>
+                <span>Sản phẩm</span>
+            </button>
+            <button class="circle-btn" onclick="openTab('nhacungcap')">
+                <i class="fas fa-truck"></i>
+                <span>Nhà cung cấp</span>
+            </button>
+            <button class="circle-btn" onclick="openTab('hoadon')">
+                <i class="fas fa-file-invoice"></i>
+                <span>Hóa đơn</span>
+            </button>
+            <button class="circle-btn" onclick="openTab('nhaphang')">
+                <i class="fas fa-cart-plus"></i>
+                <span>Nhập hàng</span>
+            </button>
+        </div>
     </div>
     <div class="content">
         <div id="khachhang" class="tab-content">
@@ -247,8 +267,8 @@
 
                     <button type="button" onclick="updateSupplier()">Cập nhật nhà cung cấp</button>
                 </form>
+            </div>
         </div>
-    </div>
 
         <div id="hoadon" class="tab-content">
             <div class="container">
@@ -414,17 +434,6 @@
             <span class="close" onclick="closeInvoiceDetailModal()">&times;</span>
             <h3>Chi tiết hóa đơn</h3>
             <div id="invoice-detail-content">
-                <!-- Details will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for import order details -->
-    <div id="import-detail-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeImportDetailModal()">&times;</span>
-            <h3>Chi tiết đơn nhập hàng</h3>
-            <div id="import-detail-content">
                 <!-- Details will be loaded here -->
             </div>
         </div>
