@@ -9,64 +9,51 @@ body {
     display: flex;
 }
 
-.sidebar, .sidebar-circle {
+.sidebar {
+    width: auto; /* Không cần chiều rộng cố định */
+    background-color: transparent; /* Xóa nền xanh */
+    box-shadow: none; /* Xóa bóng */
+    padding: 0; /* Xóa padding */
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Đẩy nút sang phải */
-    width: 180px;
-    min-width: 180px;
-    background: transparent;
-    padding: 32px 0 0 0;
-    height: 100vh;
-    border-radius: 0;
-    gap: 18px;
-    margin-right: 0; /* Đảm bảo không bị lệch trái */
+    align-items: flex-start;
+    height: auto; /* Không cần full height */
 }
 
-.circle-btn {
+.sidebar button {
     display: flex;
     align-items: center;
-    gap: 10px;
-    width: 170px;
-    height: 48px;
+    width: 234px;
+    padding: 12px 0; /* Tăng chiều cao dọc */
+    margin-bottom: 16px;
     border: none;
-    border-radius: 18px; /* Bo tròn 4 góc */
-    background: #e3f2fd;
-    color: #333;
-    font-size: 1.15em;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+    background-color: #e3f2fd;
+    color: #1976d2;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
-    padding: 0 22px;
-}
-
-.circle-btn i {
-    font-size: 1.3em;
-    color: #333;
-}
-
-.circle-btn span {
-    color: #333;
-    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+    transition: background 0.08s, color 0.08s, box-shadow 0.08s;
+    font-size: 1.08em;
+    border-radius: 18px;
+    box-shadow: 0 1px 4px rgba(25, 118, 210, 0.08);
     font-weight: 600;
-    margin: 0;
-    pointer-events: none;
+    gap: 10px;
 }
 
-.circle-btn:hover,
-.circle-btn.active {
-    background: #1976d2;
+.sidebar button:hover,
+.sidebar button.active,
+.sidebar button:focus {
+    background-color: #1976d2;
     color: #fff;
-    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
-    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
+    outline: none;
 }
 
-.circle-btn:hover i,
-.circle-btn.active i,
-.circle-btn:hover span,
-.circle-btn.active span {
-    color: #fff;
+.sidebar button i,
+.sidebar button svg {
+    margin-right: 8px;
+    font-size: 1.2em;
+    color: inherit;
 }
 
 .content {

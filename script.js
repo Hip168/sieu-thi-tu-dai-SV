@@ -1324,6 +1324,12 @@ async function addChiTietHoaDonItem() {
         alert('Không tìm thấy sản phẩm!');
         return;
     }
+
+    // Kiểm tra số lượng tồn kho
+    if (quantity > product.SoLuong) {
+        alert(`Số lượng trong kho chỉ còn ${product.SoLuong}. Không thể bán vượt quá số lượng này!`);
+        return;
+    }
     
     // Check if product is already in the list
     const existingRow = document.querySelector(`#added-items-list tr[data-product-id="${productId}"]`);
@@ -1566,8 +1572,9 @@ async function deleteInvoice(maDon) {
 async function fetchInvoices() {
     try {
         const res = await fetch('https://btldbs-api.onrender.com/api/hoadon');
-        const data = await res.json();
-        console.log(data);
+        let data = await res.json();
+        // Sắp xếp theo MaDon giảm dần (mới nhất trước)
+        data.sort((a, b) => Number(b.MaDon) - Number(a.MaDon));
         const invoiceList = document.getElementById('invoice-list');
         invoiceList.innerHTML = '';
         data.forEach(inv => {
@@ -1938,6 +1945,8 @@ async function fetchImportOrders() {
     try {
         const res = await fetch('https://btldbs-api.onrender.com/api/donnhaphang');
         const data = await res.json();
+        // Sắp xếp theo MaDon giảm dần (mới nhất trước)
+        data.sort((a, b) => Number(b.MaDon) - Number(a.MaDon));
         const tableBody = document.getElementById('import-order-list');
         tableBody.innerHTML = '';
         data.forEach(order => {
@@ -1979,5 +1988,67 @@ async function deleteImportOrder(maDon) {
     } catch (error) {
         console.error('Lỗi khi xóa phiếu nhập:', error);
         alert('Có lỗi xảy ra khi xóa phiếu nhập.');
+    }
+}
+
+/**
+ * Đóng modal chi tiết đơn nhập hàng
+ */
+function closeImportDetailModal() {
+    document.getElementById('import-detail-modal').style.display = 'none';
+}
+
+/**
+ * Hiển thị chi tiết đơn nhập hàng
+ * @param {number} maDon - Mã đơn nhập hàng cần xem chi tiết
+ */
+async function showImportOrderDetail(maDon) {
+    try {
+        // Lấy toàn bộ chi tiết nhập hàng
+        const response = await fetch('https://btldbs-api.onrender.com/api/chitietnhaphang');
+        const chiTietList = await response.json();
+        const chiTietDonNhap = chiTietList.filter(item => item.MaDon === maDon);
+
+        // Lấy toàn bộ sản phẩm
+        const spRes = await fetch('https://btldbs-api.onrender.com/api/sanpham');
+        const spList = await spRes.json();
+
+        let content = `
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá nhập</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        for (const chiTiet of chiTietDonNhap) {
+            const sanPham = spList.find(sp => sp.MaSanPham === chiTiet.MaSanPham);
+            content += `
+                <tr>
+                    <td>${String(chiTiet.MaSanPham).padStart(6, '0')}</td>
+                    <td>${sanPham ? sanPham.TenSanPham : ''}</td>
+                    <td>${chiTiet.SoLuong}</td>
+                    <td>${Number(chiTiet.DonGia).toLocaleString('vi-VN')} VNĐ</td>
+                    <td>${Number(chiTiet.SoLuong * chiTiet.DonGia).toLocaleString('vi-VN')} VNĐ</td>
+                </tr>
+            `;
+        }
+
+        content += `
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('import-detail-content').innerHTML = content;
+        document.getElementById('import-detail-modal').style.display = 'block';
+    } catch (error) {
+        console.error('Lỗi khi lấy chi tiết đơn nhập hàng:', error);
+        alert('Có lỗi xảy ra khi lấy chi tiết đơn nhập hàng.');
     }
 }
