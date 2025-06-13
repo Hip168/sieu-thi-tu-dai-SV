@@ -10,14 +10,15 @@ body {
 }
 
 .sidebar {
-    width: auto; /* Không cần chiều rộng cố định */
-    background-color: transparent; /* Xóa nền xanh */
-    box-shadow: none; /* Xóa bóng */
-    padding: 0; /* Xóa padding */
+    width: auto;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: auto; /* Không cần full height */
+    height: auto;
+    margin-top: 40px; /* Thêm dòng này để dịch các nút xuống dưới */
 }
 
 .sidebar button {
