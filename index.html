@@ -27,6 +27,9 @@
             <div id="khachhang" class="tab-content">
                 <div class="container">
                     <h2>Danh sách Khách Hàng</h2>
+                    <div class="table-header">
+                    <button class="add-button" onclick="toggleCustomerForm('add')">Thêm khách hàng</button>
+                    </div>
                     <table id="customer-table">
                         <thead>
                             <tr>
@@ -39,7 +42,6 @@
                         <tbody id="customer-list">
                         </tbody>
                     </table>
-                    <button class="add-button" onclick="toggleCustomerForm('add')">Thêm khách hàng</button>
 
                     <form id="add-customer-form" class="data-form">
                         <h3>Thêm Khách hàng Mới</h3>
@@ -69,9 +71,13 @@
                     </form>
                 </div>
             </div>
+            <!-- Tab Nhân viên -->
             <div id="nhanvien" class="tab-content active">
                 <div class="container">
                     <h2>Danh sách Nhân viên</h2>
+                    <div class="table-header">
+                        <button class="add-button" onclick="toggleEmployeeForm('add')">Thêm nhân viên</button>
+                    </div>
                     <table id="employee-table">
                         <thead>
                             <tr>
@@ -88,8 +94,6 @@
                         <tbody id="employee-list">
                         </tbody>
                     </table>
-                    <button class="add-button" onclick="toggleEmployeeForm('add')">Thêm nhân viên</button>
-
                     <form id="add-employee-form" class="data-form">
                         <h3>Thêm Nhân viên Mới</h3>
                         <label for="new-employee-id">ID:</label>
@@ -137,9 +141,13 @@
                 </div>
             </div>
 
+            <!-- Tab Sản phẩm -->
             <div id="sanpham" class="tab-content">
                 <div class="container">
                     <h2>Danh sách Sản phẩm</h2>
+                    <div class="table-header">
+                        <button class="add-button" onclick="toggleProductForm('add')">Thêm sản phẩm</button>
+                    </div>
                     <table id="product-table">
                         <thead>
                             <tr>
@@ -155,8 +163,6 @@
                         <tbody id="product-list">
                         </tbody>
                     </table>
-                    <button class="add-button" onclick="toggleProductForm('add')">Thêm sản phẩm</button>
-
                     <form id="add-product-form" class="data-form">
                         <h3>Thêm Sản phẩm Mới</h3>
                         <label for="new-product-id">Mã sản phẩm:</label>
@@ -204,9 +210,13 @@
                 </div>
             </div>
 
+            <!-- Tab Nhà cung cấp -->
             <div id="nhacungcap" class="tab-content">
                 <div class="container">
                     <h2>Danh sách Nhà cung cấp</h2>
+                    <div class="table-header">
+                        <button class="add-button" onclick="toggleSupplierForm('add')">Thêm nhà cung cấp</button>
+                    </div>
                     <table id="supplier-table">
                         <thead>
                             <tr>
@@ -220,8 +230,6 @@
                         <tbody id="supplier-list">
                         </tbody>
                     </table>
-                    <button class="add-button" onclick="toggleSupplierForm('add')">Thêm nhà cung cấp</button>
-
                     <form id="add-supplier-form" class="data-form">
                         <h3>Thêm Nhà cung cấp Mới</h3>
                         <label for="new-supplier-id">ID Nhà Cung Cấp:</label>

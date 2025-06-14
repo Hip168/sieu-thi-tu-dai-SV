@@ -735,6 +735,13 @@ td:nth-child(1), td:nth-child(6), td:nth-child(7) {
     align-items: center;
 }
 
+.table-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
 @media (max-width: 700px) {
     .header-content {
         flex-direction: column;
