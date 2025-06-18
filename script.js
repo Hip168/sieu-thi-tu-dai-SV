@@ -168,8 +168,8 @@ async function openTab(tabName) {
 
         function closeAddCustomerModal() {
             const modal = document.getElementById('add-customer-modal');
-            modal.style.display = 'none';
-            document.getElementById('add-customer-form-modal').reset();
+            if (modal) modal.style.display = 'none';
+            // Không reset form ở đây!
         }
 
         /**
@@ -2018,4 +2018,120 @@ function closeAddSupplierModal() {
         modal.style.display = 'none';
         document.getElementById('add-supplier-form-modal').reset();
     }
+}
+
+// --- Thêm logic kiểm tra số điện thoại khách hàng khi nhập ở tab hóa đơn ---
+function showAddCustomerModal(phone) {
+    let modal = document.getElementById('add-customer-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'add-customer-modal';
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+    }
+    // Luôn render lại nội dung modal để đảm bảo có phần tử modal-customer-phone
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width:400px;">
+            <span class="close" onclick="closeAddCustomerModal()">&times;</span>
+            <h3>Khách hàng không tồn tại</h3>
+            <p>Bạn có muốn thêm khách hàng mới với số điện thoại <b id="modal-customer-phone"></b> không?</p>
+            <div style="text-align:right; margin-top:18px;">
+                <button id="btn-cancel-add-customer" style="margin-right:10px; background:#e3f2fd; color:#1976d2; border:1.5px solid #90caf9; border-radius:20px; padding:8px 18px; font-weight:500;">Không</button>
+                <button id="btn-confirm-add-customer" style="background:#1976d2; color:#fff; border:none; border-radius:20px; padding:8px 18px; font-weight:500;">Có</button>
+            </div>
+        </div>
+    `;
+    // Đảm bảo phần tử đã có trong DOM trước khi gán textContent
+    const phoneSpan = document.getElementById('modal-customer-phone');
+    if (phoneSpan) phoneSpan.textContent = phone;
+    modal.style.display = 'flex';
+
+    // Gán lại sự kiện cho nút (vì innerHTML vừa bị render lại)
+    document.getElementById('btn-cancel-add-customer').onclick = closeAddCustomerModal;
+    document.getElementById('btn-confirm-add-customer').onclick = function() {
+        addCustomerFromInvoice(phone);
+    };
+}
+
+// Đảm bảo sự kiện nhập SĐT khách hàng ở tab hóa đơn luôn hoạt động
+(function() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const phoneInput = document.getElementById('invoice-customer-phone');
+        const infoDiv = document.getElementById('customer-info');
+        let lastPhoneChecked = '';
+        if (phoneInput && infoDiv) {
+            phoneInput.addEventListener('input', function () {
+                const value = this.value.trim();
+                // Chỉ xử lý khi đủ 10 số
+                if (!/^\d{10}$/.test(value)) {
+                    infoDiv.innerHTML = '';
+                    infoDiv.dataset.id = '';
+                    lastPhoneChecked = '';
+                    return;
+                }
+                const found = invoiceCustomersCache.find(c => c.SoDienThoai === value);
+                if (found) {
+                    infoDiv.innerHTML = `
+                        <b>Thông tin khách hàng:</b><br>
+                        ID: ${String(found.IdKhachHang).padStart(6, '0')}<br>
+                        Họ tên: ${found.HoTen}<br>
+                        SĐT: ${found.SoDienThoai}
+                    `;
+                    infoDiv.dataset.id = found.IdKhachHang;
+                    lastPhoneChecked = value;
+                } else {
+                    infoDiv.innerHTML = '<span style="color:#d32f2f;">Không tìm thấy khách hàng</span>';
+                    infoDiv.dataset.id = '';
+                    // Chỉ hiện popup nếu số khác với lần trước
+                    if (lastPhoneChecked !== value) {
+                        showAddCustomerModal(value);
+                        lastPhoneChecked = value;
+                    }
+                }
+            });
+        }
+    });
+})();
+
+function waitForElement(selector, callback, timeout = 2000) {
+    const start = Date.now();
+    (function check() {
+        const el = document.querySelector(selector);
+        if (el) return callback(el);
+        if (Date.now() - start > timeout) return; // timeout
+        setTimeout(check, 50);
+    })();
+}
+
+function addCustomerFromInvoice(phone) {
+    closeAddCustomerModal();
+    openTab('khachhang');
+    waitForElement('#new-customer-id', async () => {
+        await toggleCustomerForm('add');
+        const phoneInput = document.getElementById('new-customer-phone');
+        if (phoneInput) {
+            phoneInput.value = phone;
+            phoneInput.dispatchEvent(new Event('input'));
+        }
+        const nameInput = document.getElementById('new-customer-name');
+        if (nameInput) nameInput.focus();
+        // Sau khi lưu khách hàng, tự động quay lại tab hóa đơn và chọn khách hàng vừa thêm
+        const addBtn = document.querySelector('#add-customer-form-modal button[type="button"]');
+        if (addBtn) {
+            addBtn.onclick = async function() {
+                await addCustomer();
+                // Cập nhật lại cache khách hàng
+                await populateInvoiceDropdowns();
+                // Quay lại tab hóa đơn và tự động điền lại số điện thoại
+                openTab('hoadon');
+                setTimeout(() => {
+                    const invoicePhoneInput = document.getElementById('invoice-customer-phone');
+                    if (invoicePhoneInput) {
+                        invoicePhoneInput.value = phone;
+                        invoicePhoneInput.dispatchEvent(new Event('input'));
+                    }
+                }, 300);
+            };
+        }
+    });
 }
