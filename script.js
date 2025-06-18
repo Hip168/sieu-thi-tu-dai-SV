@@ -94,50 +94,14 @@ async function openTab(tabName) {
          * @param {object} [employeeData=null] - Employee data to populate the edit form.
          */
         async function toggleEmployeeForm(formType, employeeData = null) {
-            const addForm = document.getElementById('add-employee-form');
-            const editForm = document.getElementById('edit-employee-form');
-
-            // Hide other forms when dealing with employee forms
-            document.getElementById('add-product-form').style.display = 'none';
-            document.getElementById('edit-product-form').style.display = 'none';
-            document.getElementById('add-customer-form').style.display = 'none';
-            document.getElementById('edit-customer-form').style.display = 'none';
-            document.getElementById('add-supplier-form').style.display = 'none'; // Hide supplier forms
-            document.getElementById('edit-supplier-form').style.display = 'none'; // Hide supplier forms
-            currentEditingProductId = null;
-            currentEditingCustomerId = null;
-            currentEditingSupplierId = null;
-
+            const modal = document.getElementById('add-employee-modal');
             if (formType === 'add') {
-                editForm.style.display = 'none'; // Ensure edit form is hidden
-                addForm.style.display = addForm.style.display === 'none' ? 'block' : 'none'; // Toggle add form visibility
-                currentEditingEmployeeId = null; // Clear editing ID when opening add form
-
-                // If showing the add form, generate the next ID
-                if (addForm.style.display === 'block') {
                     const nextId = await generateNextEmployeeId();
                     document.getElementById('new-employee-id').value = nextId;
-                    document.getElementById('new-employee-name').focus(); // Focus on the first input field
-                } else {
-                    // Reset the add form when hiding it
-                    addForm.reset(); // Correctly reset the form
-                }
-
+                modal.style.display = 'block';
             } else if (formType === 'edit' && employeeData) {
-                // If the edit form is currently open AND it's for the same employee, close it
-                if (editForm.style.display === 'block' && currentEditingEmployeeId === employeeData.IdNhanVien) {
-                    editForm.style.display = 'none';
-                    currentEditingEmployeeId = null; // Clear editing ID
-                } else {
-                    // Otherwise, hide the add form (if open) and show the edit form with new data
-                    addForm.style.display = 'none';
-                    editForm.style.display = 'block';
                     populateEditEmployeeForm(employeeData);
-                }
-            } else { // Case for no specific formType or to hide both forms
-                addForm.style.display = 'none';
-                editForm.style.display = 'none';
-                currentEditingEmployeeId = null;
+                document.getElementById('edit-employee-modal').style.display = 'block';
             }
         }
 
@@ -161,50 +125,14 @@ async function openTab(tabName) {
          * @param {object} [productData=null] - Product data to populate the edit form.
          */
         async function toggleProductForm(formType, productData = null) {
-            const addForm = document.getElementById('add-product-form');
-            const editForm = document.getElementById('edit-product-form');
-
-            // Hide other forms when dealing with product forms
-            document.getElementById('add-employee-form').style.display = 'none';
-            document.getElementById('edit-employee-form').style.display = 'none';
-            document.getElementById('add-customer-form').style.display = 'none';
-            document.getElementById('edit-customer-form').style.display = 'none';
-            document.getElementById('add-supplier-form').style.display = 'none'; // Hide supplier forms
-            document.getElementById('edit-supplier-form').style.display = 'none'; // Hide supplier forms
-            currentEditingEmployeeId = null;
-            currentEditingCustomerId = null;
-            currentEditingSupplierId = null;
-
+            const modal = document.getElementById('add-product-modal');
             if (formType === 'add') {
-                editForm.style.display = 'none'; // Ensure edit form is hidden
-                addForm.style.display = addForm.style.display === 'none' ? 'block' : 'none'; // Toggle add form visibility
-                currentEditingProductId = null; // Clear editing ID when opening add form
-
-                // If showing the add form, generate the next ID
-                if (addForm.style.display === 'block') {
                     const nextId = await generateNextProductId();
                     document.getElementById('new-product-id').value = nextId;
-                    document.getElementById('new-product-name').focus(); // Focus on the first input field
-                } else {
-                    // Reset the add form when hiding it
-                    addForm.reset(); // Correctly reset the form
-                }
-
+                modal.style.display = 'block';
             } else if (formType === 'edit' && productData) {
-                // If the edit form is currently open AND it's for the same product, close it
-                if (editForm.style.display === 'block' && currentEditingProductId === productData.MaSanPham) {
-                    editForm.style.display = 'none';
-                    currentEditingProductId = null; // Clear editing ID
-                } else {
-                    // Otherwise, hide the add form (if open) and show the edit form with new data
-                    addForm.style.display = 'none';
-                    editForm.style.display = 'block';
                     populateEditProductForm(productData);
-                }
-            } else { // Case for no specific formType or to hide both forms
-                addForm.style.display = 'none';
-                editForm.style.display = 'none';
-                currentEditingProductId = null;
+                document.getElementById('edit-product-modal').style.display = 'block';
             }
         }
 
@@ -227,51 +155,21 @@ async function openTab(tabName) {
          * @param {object} [customerData=null] - Customer data to populate the edit form.
          */
         async function toggleCustomerForm(formType, customerData = null) {
-            const addForm = document.getElementById('add-customer-form');
-            const editForm = document.getElementById('edit-customer-form');
-
-            // Hide other forms when dealing with customer forms
-            document.getElementById('add-employee-form').style.display = 'none';
-            document.getElementById('edit-employee-form').style.display = 'none';
-            document.getElementById('add-product-form').style.display = 'none';
-            document.getElementById('edit-product-form').style.display = 'none';
-            document.getElementById('add-supplier-form').style.display = 'none'; // Hide supplier forms
-            document.getElementById('edit-supplier-form').style.display = 'none'; // Hide supplier forms
-            currentEditingEmployeeId = null;
-            currentEditingProductId = null;
-            currentEditingSupplierId = null;
-
+            const modal = document.getElementById('add-customer-modal');
             if (formType === 'add') {
-                editForm.style.display = 'none'; // Ensure edit form is hidden
-                addForm.style.display = addForm.style.display === 'none' ? 'block' : 'none'; // Toggle add form visibility
-                currentEditingCustomerId = null; // Clear editing ID when opening add form
-
-                // If showing the add form, generate the next ID
-                if (addForm.style.display === 'block') {
                     const nextId = await generateNextCustomerId();
                     document.getElementById('new-customer-id').value = nextId;
-                    document.getElementById('new-customer-name').focus(); // Focus on the first input field
-                } else {
-                    // Reset the add form when hiding it
-                    addForm.reset(); // Correctly reset the form
-                }
-
+                modal.style.display = 'block';
             } else if (formType === 'edit' && customerData) {
-                // If the edit form is currently open AND it's for the same customer, close it
-                if (editForm.style.display === 'block' && currentEditingCustomerId === customerData.IdKhachHang) {
-                    editForm.style.display = 'none';
-                    currentEditingCustomerId = null; // Clear editing ID
-                } else {
-                    // Otherwise, hide the add form (if open) and show the edit form with new data
-                    addForm.style.display = 'none';
-                    editForm.style.display = 'block';
                     populateEditCustomerForm(customerData);
+                document.getElementById('edit-customer-modal').style.display = 'block';
                 }
-            } else { // Case for no specific formType or to hide both forms
-                addForm.style.display = 'none';
-                editForm.style.display = 'none';
-                currentEditingCustomerId = null;
             }
+
+        function closeAddCustomerModal() {
+            const modal = document.getElementById('add-customer-modal');
+            modal.style.display = 'none';
+            document.getElementById('add-customer-form-modal').reset();
         }
 
         /**
@@ -291,50 +189,14 @@ async function openTab(tabName) {
          * @param {object} [supplierData=null] - Supplier data to populate the edit form.
          */
         async function toggleSupplierForm(formType, supplierData = null) {
-            const addForm = document.getElementById('add-supplier-form');
-            const editForm = document.getElementById('edit-supplier-form');
-
-            // Hide other forms when dealing with supplier forms
-            document.getElementById('add-employee-form').style.display = 'none';
-            document.getElementById('edit-employee-form').style.display = 'none';
-            document.getElementById('add-product-form').style.display = 'none';
-            document.getElementById('edit-product-form').style.display = 'none';
-            document.getElementById('add-customer-form').style.display = 'none';
-            document.getElementById('edit-customer-form').style.display = 'none';
-            currentEditingEmployeeId = null;
-            currentEditingProductId = null;
-            currentEditingCustomerId = null;
-
+            const modal = document.getElementById('add-supplier-modal');
             if (formType === 'add') {
-                editForm.style.display = 'none'; // Ensure edit form is hidden
-                addForm.style.display = addForm.style.display === 'none' ? 'block' : 'none'; // Toggle add form visibility
-                currentEditingSupplierId = null; // Clear editing ID when opening add form
-
-                // If showing the add form, generate the next ID
-                if (addForm.style.display === 'block') {
                     const nextId = await generateNextSupplierId();
                     document.getElementById('new-supplier-id').value = nextId;
-                    document.getElementById('new-supplier-company-name').focus(); // Focus on the first input field
-                } else {
-                    // Reset the add form when hiding it
-                    addForm.reset(); // Correctly reset the form
-                }
-
+                modal.style.display = 'block';
             } else if (formType === 'edit' && supplierData) {
-                // If the edit form is currently open AND it's for the same supplier, close it
-                if (editForm.style.display === 'block' && currentEditingSupplierId === supplierData.IdNhaCungCap) {
-                    editForm.style.display = 'none';
-                    currentEditingSupplierId = null; // Clear editing ID
-                } else {
-                    // Otherwise, hide the add form (if open) and show the edit form with new data
-                    addForm.style.display = 'none';
-                    editForm.style.display = 'block';
                     populateEditSupplierForm(supplierData);
-                }
-            } else { // Case for no specific formType or to hide both forms
-                addForm.style.display = 'none';
-                editForm.style.display = 'none';
-                currentEditingSupplierId = null;
+                document.getElementById('edit-supplier-modal').style.display = 'block';
             }
         }
 
@@ -405,25 +267,16 @@ async function openTab(tabName) {
          */
         async function generateNextEmployeeId() {
             try {
-                console.log('Generating next employee ID...');
                 const response = await fetch(`${API_BASE}/nhanvien`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok when fetching employee IDs');
+                const employees = await response.json();
+                if (employees.length === 0) {
+                    return 1;
                 }
-                const data = await response.json();
-                console.log('Existing employee IDs fetched for generation:', data.map(emp => emp.IdNhanVien));
-                let maxId = 0;
-                if (data && data.length > 0) {
-                    // Map IDs to numbers and find the maximum
-                    maxId = Math.max(...data.map(emp => emp.IdNhanVien));
-                }
-                const nextId = maxId + 1;
-                console.log('Next generated employee ID:', String(nextId).padStart(6, '0'));
-                return String(nextId).padStart(6, '0'); // Format as 000001
+                const maxId = Math.max(...employees.map(emp => emp.IdNhanVien));
+                return maxId + 1;
             } catch (error) {
                 console.error('Error generating next employee ID:', error);
-                // Instead of alert, use a custom message box or console log for non-critical errors
-                return '';
+                return 1;
             }
         }
 
@@ -434,25 +287,16 @@ async function openTab(tabName) {
          */
         async function generateNextProductId() {
             try {
-                console.log('Generating next product ID...');
                 const response = await fetch(`${API_BASE}/sanpham`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok when fetching product IDs');
+                const products = await response.json();
+                if (products.length === 0) {
+                    return 1;
                 }
-                const data = await response.json();
-                console.log('Existing product IDs fetched for generation:', data.map(prod => prod.MaSanPham));
-                let maxId = 0;
-                if (data && data.length > 0) {
-                    // Map IDs to numbers and find the maximum
-                    maxId = Math.max(...data.map(prod => prod.MaSanPham));
-                }
-                const nextId = maxId + 1;
-                console.log('Next generated product ID:', String(nextId).padStart(6, '0'));
-                return String(nextId).padStart(6, '0'); // Format as 000001
+                const maxId = Math.max(...products.map(p => p.MaSanPham));
+                return maxId + 1;
             } catch (error) {
                 console.error('Error generating next product ID:', error);
-                // Instead of alert, use a custom message box or console log for non-critical errors
-                return '';
+                return 1;
             }
         }
 
@@ -462,24 +306,16 @@ async function openTab(tabName) {
          */
         async function generateNextCustomerId() {
             try {
-                console.log('Generating next customer ID...');
-                const response = await fetch(`${API_BASE}/khachhang`); // Assuming API endpoint for customers
-                if (!response.ok) {
-                    throw new Error('Network response was not ok when fetching customer IDs');
+                const response = await fetch(`${API_BASE}/khachhang`);
+                const customers = await response.json();
+                if (customers.length === 0) {
+                    return 1;
                 }
-                const data = await response.json();
-                console.log('Existing customer IDs fetched for generation:', data.map(cust => cust.IdKhachHang));
-                let maxId = 0;
-                if (data && data.length > 0) {
-                    // Map IDs to numbers and find the maximum
-                    maxId = Math.max(...data.map(cust => cust.IdKhachHang));
-                }
-                const nextId = maxId + 1;
-                console.log('Next generated customer ID:', String(nextId).padStart(6, '0'));
-                return String(nextId).padStart(6, '0'); // Format as 000001
+                const maxId = Math.max(...customers.map(c => c.IdKhachHang));
+                return maxId + 1;
             } catch (error) {
                 console.error('Error generating next customer ID:', error);
-                return '';
+                return 1;
             }
         }
 
@@ -489,24 +325,16 @@ async function openTab(tabName) {
          */
         async function generateNextSupplierId() {
             try {
-                console.log('Generating next supplier ID...');
-                const response = await fetch(`${API_BASE}/nhacungcap`); // Assuming API endpoint for suppliers
-                if (!response.ok) {
-                    throw new Error('Network response was not ok when fetching supplier IDs');
+                const response = await fetch(`${API_BASE}/nhacungcap`);
+                const suppliers = await response.json();
+                if (suppliers.length === 0) {
+                    return 1;
                 }
-                const data = await response.json();
-                console.log('Existing supplier IDs fetched for generation:', data.map(sup => sup.IdNhaCungCap));
-                let maxId = 0;
-                if (data && data.length > 0) {
-                    // Map IDs to numbers and find the maximum
-                    maxId = Math.max(...data.map(sup => sup.IdNhaCungCap));
-                }
-                const nextId = maxId + 1;
-                console.log('Next generated supplier ID:', String(nextId).padStart(6, '0'));
-                return String(nextId).padStart(6, '0'); // Format as 000001
+                const maxId = Math.max(...suppliers.map(s => s.IdNhaCungCap));
+                return maxId + 1;
             } catch (error) {
                 console.error('Error generating next supplier ID:', error);
-                return '';
+                return 1;
             }
         }
 
@@ -514,47 +342,45 @@ async function openTab(tabName) {
          * Handles adding a new employee to the database via API.
          */
         async function addEmployee() {
-            const idInput = document.getElementById('new-employee-id');
-            const nameInput = document.getElementById('new-employee-name');
-            const positionInput = document.getElementById('new-employee-position');
-            const dobInput = document.getElementById('new-employee-dob');
-            const addressInput = document.getElementById('new-employee-address');
-            const salaryInput = document.getElementById('new-employee-salary');
+            const id = document.getElementById('new-employee-id').value;
+            const name = document.getElementById('new-employee-name').value;
+            const position = document.getElementById('new-employee-position').value;
+            const dob = document.getElementById('new-employee-dob').value;
+            const address = document.getElementById('new-employee-address').value;
+            const salary = document.getElementById('new-employee-salary').value;
 
-            const data = {
-                IdNhanVien: parseInt(idInput.value),
-                Ten: nameInput.value,
-                ChucVu: positionInput.value,
-                NgayThangNamSinh: dobInput.value,
-                DiaChi: addressInput.value,
-                Luong: parseFloat(salaryInput.value)
-            };
-
-            console.log('Attempting to add new employee:', data);
+            if (!name || !position || !dob || !address || !salary) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
 
             try {
                 const response = await fetch(`${API_BASE}/nhanvien`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                        IdNhanVien: parseInt(id),
+                        Ten: name,
+                        ChucVu: position,
+                        NgayThangNamSinh: dob,
+                        DiaChi: address,
+                        Luong: parseFloat(salary)
+                    })
                 });
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Lỗi thêm nhân viên: ${response.status} - ${errorText}`);
-                }
-                const result = await response.json();
-                console.log('Employee added successfully:', result);
-
+                if (response.ok) {
+                    closeAddEmployeeModal();
                 fetchEmployees();
-                toggleEmployeeForm('add');
-                document.getElementById('add-employee-form').reset();
                 alert('Thêm nhân viên thành công!');
+                } else {
+                    const error = await response.json();
+                    alert('Lỗi: ' + error.error);
+                }
             } catch (error) {
-                console.error('Lỗi khi thêm nhân viên:', error);
-                alert('Có lỗi xảy ra khi thêm nhân viên.');
+                console.error('Error adding employee:', error);
+                alert('Có lỗi xảy ra khi thêm nhân viên!');
             }
         }
 
@@ -580,10 +406,10 @@ async function openTab(tabName) {
             const finalAddress = address !== '' ? address : oldAddress;
             const finalSalary = salary !== '' ? salary : oldSalary;
             const body = {
-                ID_NhanVien: id,
-                HoTen: finalName,
+                IdNhanVien: id,
+                Ten: finalName,
                 ChucVu: finalPosition,
-                NgaySinh: finalDob,
+                NgayThangNamSinh: finalDob,
                 DiaChi: finalAddress,
                 Luong: parseFloat(finalSalary)
             };
@@ -663,7 +489,9 @@ async function openTab(tabName) {
         }
 
         function closeEditEmployeeModal() {
-            document.getElementById('edit-employee-modal').style.display = 'none';
+            const modal = document.getElementById('edit-employee-modal');
+            modal.style.display = 'none';
+            document.getElementById('edit-employee-form-modal').reset();
         }
 
         /**
@@ -675,36 +503,46 @@ async function openTab(tabName) {
                 const employees = await response.json();
                 const tbody = document.getElementById('employee-list');
                 tbody.innerHTML = '';
+                
                 employees.forEach(employee => {
                     const row = document.createElement('tr');
+                    
+                    // ID nhân viên
                     const idCell = document.createElement('td');
                     idCell.textContent = employee.IdNhanVien;
                     row.appendChild(idCell);
 
+                    // Tên
                     const nameCell = document.createElement('td');
                     nameCell.textContent = employee.Ten;
                     row.appendChild(nameCell);
 
+                    // Chức vụ
                     const positionCell = document.createElement('td');
                     positionCell.textContent = employee.ChucVu;
                     row.appendChild(positionCell);
 
+                    // Ngày tháng năm sinh
                     const dobCell = document.createElement('td');
                     dobCell.textContent = formatDate(employee.NgayThangNamSinh);
                     row.appendChild(dobCell);
 
+                    // Địa chỉ
                     const addressCell = document.createElement('td');
                     addressCell.textContent = employee.DiaChi;
                     row.appendChild(addressCell);
 
+                    // Lương
                     const salaryCell = document.createElement('td');
                     salaryCell.textContent = employee.Luong;
                     row.appendChild(salaryCell);
 
+                    // Tuổi
                     const ageCell = document.createElement('td');
                     ageCell.textContent = calculateAge(employee.NgayThangNamSinh);
                     row.appendChild(ageCell);
 
+                    // Nút hành động
                     const actionCell = document.createElement('td');
                     actionCell.className = 'action-buttons';
                     actionCell.innerHTML = `
@@ -876,7 +714,9 @@ async function openTab(tabName) {
         }
 
         function closeEditProductModal() {
-            document.getElementById('edit-product-modal').style.display = 'none';
+            const modal = document.getElementById('edit-product-modal');
+            modal.style.display = 'none';
+            document.getElementById('edit-product-form-modal').reset();
         }
 
         /**
@@ -949,8 +789,8 @@ async function openTab(tabName) {
                 console.log('Customer added successfully:', result);
 
                 fetchCustomers();
-                toggleCustomerForm('add');
-                document.getElementById('add-customer-form').reset();
+                closeAddCustomerModal();
+                // document.getElementById('add-customer-form').reset(); // Removed because inline form no longer exists
                 alert('Thêm khách hàng thành công!');
             } catch (error) {
                 console.error('Lỗi khi thêm khách hàng:', error);
@@ -1059,7 +899,9 @@ async function openTab(tabName) {
         }
 
         function closeEditCustomerModal() {
-            document.getElementById('edit-customer-modal').style.display = 'none';
+            const modal = document.getElementById('edit-customer-modal');
+            modal.style.display = 'none';
+            document.getElementById('edit-customer-form-modal').reset();
         }
 
         /**
@@ -1108,43 +950,36 @@ async function openTab(tabName) {
             const phone = document.getElementById('new-supplier-phone').value;
             const email = document.getElementById('new-supplier-email').value;
 
-            if (!id || !companyName || !phone || !email) {
-                alert('Vui lòng điền đầy đủ thông tin nhà cung cấp.');
+            if (!companyName || !phone || !email) {
+                alert('Vui lòng điền đầy đủ thông tin!');
                 return;
             }
 
-            const newSupplier = {
-                IdNhaCungCap: parseInt(id),
-                TenCongTy: companyName,
-                SoDienThoai: phone,
-                Email: email
-            };
-
-            console.log('Attempting to add new supplier:', newSupplier);
-
             try {
-                const response = await fetch(`${API_BASE}/nhacungcap`, { // Assuming API endpoint for suppliers
+                const response = await fetch(`${API_BASE}/nhacungcap`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(newSupplier)
+                    body: JSON.stringify({
+                        IdNhaCungCap: parseInt(id),
+                        TenCongTy: companyName,
+                        SoDienThoai: phone,
+                        Email: email
+                    })
                 });
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Lỗi thêm nhà cung cấp: ${response.status} - ${errorText}`);
-                }
-                const result = await response.json();
-                console.log('Supplier added successfully:', result);
-
+                if (response.ok) {
+                    closeAddSupplierModal();
                 fetchSuppliers();
-                toggleSupplierForm('add');
-                document.getElementById('add-supplier-form').reset();
                 alert('Thêm nhà cung cấp thành công!');
+                } else {
+                    const error = await response.json();
+                    alert('Lỗi: ' + error.error);
+                }
             } catch (error) {
-                console.error('Lỗi khi thêm nhà cung cấp:', error);
-                alert('Có lỗi xảy ra khi thêm nhà cung cấp.');
+                console.error('Error adding supplier:', error);
+                alert('Có lỗi xảy ra khi thêm nhà cung cấp!');
             }
         }
 
@@ -1239,7 +1074,9 @@ async function openTab(tabName) {
         }
 
         function closeEditSupplierModal() {
-            document.getElementById('edit-supplier-modal').style.display = 'none';
+            const modal = document.getElementById('edit-supplier-modal');
+            modal.style.display = 'none';
+            document.getElementById('edit-supplier-form-modal').reset();
         }
 
         /**
@@ -2157,4 +1994,28 @@ async function initializeStatistics() {
 
     // Load initial statistics
     await updateStatistics();
+}
+
+function closeAddEmployeeModal() {
+    const modal = document.getElementById('add-employee-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.getElementById('add-employee-form-modal').reset();
+    }
+}
+
+function closeAddProductModal() {
+    const modal = document.getElementById('add-product-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.getElementById('add-product-form-modal').reset();
+    }
+}
+
+function closeAddSupplierModal() {
+    const modal = document.getElementById('add-supplier-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.getElementById('add-supplier-form-modal').reset();
+    }
 }
