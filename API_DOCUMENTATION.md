@@ -45,7 +45,8 @@
     "MaDon": 1,
     "Ngay": "2024-03-20",
     "TongTien": 1000000,
-    "IdKhachHang": 1
+    "IdKhachHang": 1,
+    "IdNhanVien": 1
 }
 ```
 
@@ -197,7 +198,8 @@
     "MaDon": 1,
     "Ngay": "2024-03-20",
     "TongTien": 1000000,
-    "IdNhaCungCap": 1
+    "IdNhaCungCap": 1,
+    "IdNhanVien": 1
 }
 ```
 
