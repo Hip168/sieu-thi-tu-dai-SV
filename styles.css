@@ -449,74 +449,194 @@ td:nth-child(1), td:nth-child(6), td:nth-child(7) {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100vw;
     height: 100vh;
     overflow: auto;
-    background: rgba(0,0,0,0.25);
+    background: rgba(30, 42, 70, 0.25);
+    backdrop-filter: blur(4px) saturate(120%);
+    -webkit-backdrop-filter: blur(4px) saturate(120%);
     justify-content: center;
     align-items: center;
+    transition: background 0.2s;
+    display: flex;
 }
+
 .modal-content {
-    background: #fff;
-    margin: 60px auto;
-    padding: 32px 28px 24px 28px;
-    border-radius: 10px;
-    max-width: 480px;
-    min-width: 320px;
-    box-shadow: 0 4px 24px rgba(25, 118, 210, 0.13);
+    background: rgba(255,255,255,0.98);
+    margin: 0 auto;
+    padding: 24px 24px 20px 24px;
+    border-radius: 12px;
+    max-width: 500px;
+    min-width: 280px;
+    box-shadow: 0 8px 40px 0 rgba(25, 118, 210, 0.22), 0 1.5px 8px 0 rgba(25, 118, 210, 0.10);
     position: relative;
-    animation: modalFadeIn 0.2s;
+    animation: modalPopIn 0.22s cubic-bezier(.4,1.4,.6,1) both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes modalPopIn {
+    from { opacity: 0; transform: scale(0.92) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
+
 .modal-content h3 {
     color: #1976d2;
     margin-top: 0;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-align: center;
 }
+
 .modal-content .close {
     position: absolute;
     top: 12px;
-    right: 18px;
-    font-size: 1.7rem;
+    right: 16px;
+    font-size: 1.8rem;
     color: #1976d2;
     cursor: pointer;
     font-weight: bold;
-    transition: color 0.2s;
+    transition: color 0.18s, transform 0.18s;
+    z-index: 10;
+    border-radius: 50%;
+    background: rgba(230,240,255,0.7);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
 }
 .modal-content .close:hover {
-    color: #d32f2f;
+    color: #fff;
+    background: #1976d2;
+    transform: scale(1.12) rotate(8deg);
 }
+
+/* Modal form styles */
+.modal-content form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    margin-top: 4px;
+}
+.modal-content label {
+    font-weight: 600;
+    color: #1976d2;
+    margin-bottom: 2px;
+    margin-top: 6px;
+    font-size: 0.95em;
+}
+.modal-content input[type="text"],
+.modal-content input[type="date"],
+.modal-content input[type="number"],
+.modal-content input[type="email"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #b3c6e0;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 0.95em;
+    background: #f8fbff;
+    color: #222;
+    box-sizing: border-box;
+    transition: border 0.18s;
+}
+.modal-content input:focus {
+    border: 1.5px solid #1976d2;
+    outline: none;
+}
+.modal-content button {
+    background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 0;
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-top: 14px;
+    margin-bottom: 2px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+    letter-spacing: 0.3px;
+}
+.modal-content button:hover {
+    background: #125ea7;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+    transform: translateY(-2px) scale(1.03);
+}
+
+/* Responsive modal */
+@media (max-width: 600px) {
+    .modal-content {
+        max-width: 92vw;
+        min-width: 0;
+        padding: 16px 4vw 16px 4vw;
+    }
+    .modal-content h3 {
+        font-size: 1.1rem;
+    }
+    .modal-content .close {
+        top: 8px;
+        right: 8px;
+        font-size: 1.4rem;
+        width: 28px;
+        height: 28px;
+    }
+}
+
 #invoice-detail-content {
     font-size: 1rem;
     color: #222;
 }
 #invoice-detail-content table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-top: 10px;
     margin-bottom: 10px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
 }
 #invoice-detail-content th, #invoice-detail-content td {
     border: 1px solid #e3eaf1;
-    padding: 7px 6px;
+    padding: 12px 10px;
     text-align: center;
-    font-size: 0.98rem;
+    font-size: 1rem;
 }
 #invoice-detail-content th {
     background: #e3f2fd;
     color: #1976d2;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.08em;
 }
 #invoice-detail-content td {
     background: #f9fbfd;
+}
+#invoice-detail-content tr:first-child th:first-child {
+    border-top-left-radius: 14px;
+}
+#invoice-detail-content tr:first-child th:last-child {
+    border-top-right-radius: 14px;
+}
+#invoice-detail-content tr:last-child td:first-child {
+    border-bottom-left-radius: 14px;
+}
+#invoice-detail-content tr:last-child td:last-child {
+    border-bottom-right-radius: 14px;
 }
 .detail-button {
     background: #e3f2fd !important;
@@ -1098,4 +1218,47 @@ td:nth-child(1), td:nth-child(6), td:nth-child(7) {
 }
 #edit-supplier-form-modal button:hover {
     background: #1565c0;
+}
+
+#import-detail-content {
+    font-size: 1rem;
+    color: #222;
+}
+#import-detail-content table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+}
+#import-detail-content th, #import-detail-content td {
+    border: 1px solid #e3eaf1;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 1rem;
+}
+#import-detail-content th {
+    background: #e3f2fd;
+    color: #1976d2;
+    font-weight: 700;
+    font-size: 1.08em;
+}
+#import-detail-content td {
+    background: #f9fbfd;
+}
+#import-detail-content tr:first-child th:first-child {
+    border-top-left-radius: 14px;
+}
+#import-detail-content tr:first-child th:last-child {
+    border-top-right-radius: 14px;
+}
+#import-detail-content tr:last-child td:first-child {
+    border-bottom-left-radius: 14px;
+}
+#import-detail-content tr:last-child td:last-child {
+    border-bottom-right-radius: 14px;
 }
