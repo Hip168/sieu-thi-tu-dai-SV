@@ -129,7 +129,7 @@
                     <input type="date" id="invoice-date">
                     <br><br>
                     <label for="invoice-customer-phone">Nhập SĐT khách hàng:</label>
-                    <input type="text" id="invoice-customer-phone" maxLength="10" placeholder="Nhập số điện thoại">
+                    <input type="text" id="invoice-customer-phone" minlength="10" maxLength="10" placeholder="Nhập số điện thoại">
                     <div id="customer-info" style="margin-top:16px;" ></div>
                     <br>
                     <label for="invoice-employee-id">Chọn nhân viên:</label>
@@ -378,7 +378,7 @@
                 <input type="text" id="edit-customer-name"><br><br>
 
                 <label for="edit-customer-phone">Số điện thoại:</label>
-                <input type="text" id="edit-customer-phone"><br><br>
+                <input type="text" minlength="10" id="edit-customer-phone"><br><br>
 
                 <button type="button" onclick="updateCustomer()">Cập nhật khách hàng</button>
             </form>
